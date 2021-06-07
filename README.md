@@ -1,2 +1,3 @@
-*Mega Clicker*
+# Mega Clicker
+
 It is a Qt project.
