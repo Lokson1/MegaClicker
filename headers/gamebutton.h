@@ -1,6 +1,8 @@
 #ifndef GAMEBUTTON_H
 #define GAMEBUTTON_H
 
+#include "gamepoints.h"
+
 #include <QPushButton>
 #include <QString>
 
@@ -12,10 +14,11 @@ class GameButton : public QPushButton
 	Q_OBJECT
 
 public:
-	GameButton(QString printOnButton, int* points, QWidget* parent = 0);
+	GameButton(QString printOnButton, QWidget* parent = 0);
+	~GameButton();
 
 protected:
-	int* m_pPoints;		// Points at game score
+	GamePoints* s_points;		// Points at game score
 
 signals:
 	void changedPoints(int value);
@@ -29,7 +32,7 @@ class MainClicker : public GameButton
 	Q_OBJECT
 
 public:
-	MainClicker(QString printOnButton, int* points, QWidget* parent = 0);
+	MainClicker(QString printOnButton, QWidget* parent = 0);
 
 public slots:
 	void incrPoints();
@@ -43,19 +46,18 @@ class RepeatingIncrease: public GameButton
 	Q_OBJECT
 
 public:
-	RepeatingIncrease(int increase, int* points, int cost, QWidget* parent = 0);
+	RepeatingIncrease(int increase, int cost, QWidget* parent = 0);
 
 private slots:
-	void autoClickPlusFive();
-	void autoPlusFive();
+	void byingAutoIncr();
+	void autoPointsIncr();
 
 public slots:
 	void isClickable();
 
 private:
-	int m_increase;
-	int m_regularIncr;	// Regular increasing points
 	int m_cost;
+	int m_increase;
 };
 
 #endif // GAMEBUTTON_H

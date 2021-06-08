@@ -7,29 +7,18 @@
 
 void MainWindow::showPoints()
 {
-	m_lcdNumber->display(m_points);
+	m_lcdNumber->display(s_points->getPoints());
 	emit pointsSet();
 }
 
-// initializating preveous points
-void MainWindow::fileReading()
+MainWindow::MainWindow(QWidget* parent) : QWidget(parent), s_points(GamePoints::initPoints())
 {
-	QFile data("score");
-	data.open(QIODevice::ReadOnly | QIODevice::ExistingOnly);
-	QTextStream file(&data);
-	file >> m_points;
-	data.close();
-}
-
-MainWindow::MainWindow(QWidget* parent) : QWidget(parent)
-{
-	fileReading();
-
 	// Configurating buttons
-	MainClicker* mainClicker = new MainClicker("Click me", &m_points, this);
-	RepeatingIncrease*	autoPlusOne = new RepeatingIncrease(1, &m_points, 600, this);
-	RepeatingIncrease*  autoPlusTwo = new RepeatingIncrease(2, &m_points, 1000, this);
+	MainClicker* mainClicker = new MainClicker("Click me", this);
+	RepeatingIncrease*	autoPlusOne = new RepeatingIncrease(1, 600, this);
+	RepeatingIncrease*  autoPlusTwo = new RepeatingIncrease(2, 1000, this);
 
+	// TODO fix bug with size of QGrid (it is small and doesn't fill all background)
 	QGridLayout* grid = new QGridLayout(this);
 	m_lcdNumber       = new QLCDNumber(this);
 	m_lcdNumber->setDigitCount(11);
@@ -47,18 +36,4 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent)
 	connect(this, &MainWindow::pointsSet, autoPlusOne, &RepeatingIncrease::isClickable);
 	connect(autoPlusTwo, &MainClicker::changedPoints, this, &MainWindow::showPoints);
 	connect(this, &MainWindow::pointsSet, autoPlusTwo, &RepeatingIncrease::isClickable);
-}
-
-MainWindow::~MainWindow()
-{
-	QFile data("score");
-	data.open(QIODevice::WriteOnly);
-	QTextStream file(&data);
-
-	if (data.isOpen()) {
-		file << m_points;
-	}
-	else
-		qDebug() << "File is not opened";
-	data.close();
 }

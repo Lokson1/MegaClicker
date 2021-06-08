@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "gamepoints.h"
+
 #include <QWidget>
 #include <QLCDNumber>
 #include <QPushButton>
@@ -12,12 +14,10 @@ class MainWindow : public QWidget
 
 public:
 	MainWindow(QWidget* parent = 0);
-	~MainWindow();
 
 private:
 	QLCDNumber* m_lcdNumber;
-	int m_points;
-	int m_regular_points;
+	GamePoints* s_points;
 
 	void fileReading();
 

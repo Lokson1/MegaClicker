@@ -12,13 +12,8 @@ class Clicker : public QWidget
 	Q_OBJECT
 public:
 	Clicker(QWidget *parent = nullptr);
-	~Clicker();
 
 private:
-	int m_points;			// Game score
-	int m_timeInterval; 	// time for appending new points
-	int m_regularPoints; 	// points that we add every "m_timeInterval"
-
 	MainWindow* m_mainWindow;
 	Menu* m_menu;
 	QShortcut* m_esc;

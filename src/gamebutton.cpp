@@ -2,65 +2,59 @@
 #include <QDebug>
 #include <QTimer>
 
-GameButton::GameButton(QString printOnButton, int* points, QWidget* parent)
-	: QPushButton(printOnButton, parent)
+GameButton::GameButton(QString printOnButton, QWidget* parent)
+	: QPushButton(printOnButton, parent), s_points(GamePoints::initPoints())
 {
-	m_pPoints = points;
+}
+
+GameButton::~GameButton() {
+	s_points->tryToRm();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Main clicker implementation
 ///////////////////////////////////////////////////////////////////////////////
 
-MainClicker::MainClicker(QString printOnButton, int* points, QWidget* parent)
-	: GameButton(printOnButton, points, parent)
+MainClicker::MainClicker(QString printOnButton, QWidget* parent)
+	: GameButton(printOnButton, parent)
 {
 	connect(this, &QPushButton::clicked, this, &MainClicker::incrPoints);
 }
 
 void MainClicker::incrPoints()
 {
-	(*m_pPoints)++;
-	emit changedPoints(*m_pPoints);
+	*s_points += 1;
+	emit changedPoints(1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Plus five button implementation
 ///////////////////////////////////////////////////////////////////////////////
 
-RepeatingIncrease::RepeatingIncrease(int increase, int* points,
-									 int cost, QWidget* parent)
-	: GameButton(QString("Auto: +%1 per sec.\nCost: %2").arg(increase).arg(cost),points, parent),
-	  m_increase(increase), m_cost(cost)
+RepeatingIncrease::RepeatingIncrease(int increase, int cost, QWidget* parent)
+	: GameButton(QString("Auto: +%1 per sec.\nCost: %2").arg(increase).arg(cost), parent),
+	  m_cost(cost), m_increase(increase)
 {
-	m_regularIncr = 0;
 	this->setEnabled(false);
 
-	connect(this, &QPushButton::clicked, this, &RepeatingIncrease::autoClickPlusFive);
-
-	QTimer* timer = new QTimer(this);
-	connect(timer, &QTimer::timeout, this, &RepeatingIncrease::autoPlusFive);
-	timer->start(1000);
+	connect(this, &QPushButton::clicked, this, &RepeatingIncrease::byingAutoIncr);
+	connect(s_points, &GamePoints::pointsIncr, this, &RepeatingIncrease::autoPointsIncr);
 }
 
-void RepeatingIncrease::autoClickPlusFive()
+void RepeatingIncrease::byingAutoIncr()
 {
-	if (*m_pPoints >= m_cost) {
-		*m_pPoints -= m_cost;
-		m_regularIncr += m_increase;
-		emit changedPoints(*m_pPoints);
+	if (s_points->getPoints() >= m_cost) {
+		*s_points -= m_cost;
+		s_points->incrRegPoints(m_increase);
+		emit changedPoints(s_points->getPoints());
 	}
 }
 
-void RepeatingIncrease::autoPlusFive()
-{
-	*m_pPoints += m_regularIncr;
-	emit changedPoints(*m_pPoints);
-}
+void RepeatingIncrease::autoPointsIncr() { emit changedPoints(s_points->getPoints()); }
 
 void RepeatingIncrease::isClickable()
 {
-	if (*m_pPoints >= m_cost)
+	if (s_points->getPoints() >= m_cost)
 		this->setEnabled(true);
 	else
 		this->setEnabled(false);

@@ -8,15 +8,19 @@ CONFIG += c++11
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+INCLUDEPATH += headers/
+
 SOURCES += \
-    src/clicker.cpp \
+    src/main.cpp \
+	src/gamepoints.cpp \
+	src/clicker.cpp \
 	src/gamebutton.cpp \
-	src/main.cpp \
 	src/mainwindow.cpp \
 	src/menu.cpp
 
 HEADERS += \
-    headers/clicker.h \
+    headers/gamepoints.h \
+	headers/clicker.h \
 	headers/gamebutton.h \
 	headers/mainwindow.h \
 	headers/menu.h

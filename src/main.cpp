@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
 	Clicker window;
-	window.resize(250, 200);
 	window.show();
+	window.resize(170, 200);
 	return app.exec();
 }
