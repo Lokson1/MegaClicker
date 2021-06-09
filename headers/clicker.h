@@ -7,9 +7,14 @@
 #include <QWidget>
 #include <QShortcut>
 
+/*!
+ * \class Clicker
+ * \brief This is main class of the game that managing swapping between windows.
+*/
 class Clicker : public QWidget
 {
 	Q_OBJECT
+
 public:
 	Clicker(QWidget *parent = nullptr);
 
@@ -20,7 +25,6 @@ private:
 
 private slots:
 	void switchWinMode();
-
 };
 
 #endif // CLICKER_H

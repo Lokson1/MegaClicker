@@ -7,13 +7,9 @@ GameButton::GameButton(QString printOnButton, QWidget* parent)
 {
 }
 
-GameButton::~GameButton() {
-	s_points->tryToRm();
-}
+GameButton::~GameButton() { s_points->tryToRm(); }
 
-///////////////////////////////////////////////////////////////////////////////
-// Main clicker implementation
-///////////////////////////////////////////////////////////////////////////////
+/* MainClicker implementation */
 
 MainClicker::MainClicker(QString printOnButton, QWidget* parent)
 	: GameButton(printOnButton, parent)
@@ -23,13 +19,12 @@ MainClicker::MainClicker(QString printOnButton, QWidget* parent)
 
 void MainClicker::incrPoints()
 {
+	// Pointer is necessary
 	*s_points += 1;
 	emit changedPoints(1);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Plus five button implementation
-///////////////////////////////////////////////////////////////////////////////
+/* RepeatingIncrease implementation */
 
 RepeatingIncrease::RepeatingIncrease(int increase, int cost, QWidget* parent)
 	: GameButton(QString("Auto: +%1 per sec.\nCost: %2").arg(increase).arg(cost), parent),
@@ -52,6 +47,7 @@ void RepeatingIncrease::byingAutoIncr()
 
 void RepeatingIncrease::autoPointsIncr() { emit changedPoints(s_points->getPoints()); }
 
+/// This slot makes button clickable when s_score is enough
 void RepeatingIncrease::isClickable()
 {
 	if (s_points->getPoints() >= m_cost)

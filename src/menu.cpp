@@ -2,17 +2,12 @@
 
 #include <QFont>
 
-///////////////////////////////////////////////////////////////////////////////
-/// \brief menu::menu
-/// \param parent
-///
 Menu::Menu(QWidget *parent) : QWidget(parent)
 {
 	m_label = new QLabel("Mega Clicker", this);
 	m_label->setFont(QFont("Arial", 16, QFont::Bold));
 
 	m_returnToGame = new QPushButton("Resume game", this);
-	connect(m_returnToGame, &QPushButton::clicked, this, &Menu::goToMainWin);
 
 	// TODO make button to work
 	m_settings     = new QPushButton("Settings", this);
@@ -25,7 +20,12 @@ Menu::Menu(QWidget *parent) : QWidget(parent)
 	setLayout(grid);
 }
 
-void Menu::setMainWindow(QWidget *win) { m_mainWindow = win; }
+/// Connects "resume game" button with mainWindow
+void Menu::setMainWindow(QWidget *win)
+{
+	m_mainWindow = win;
+	connect(m_returnToGame, &QPushButton::clicked, this, &Menu::goToMainWin);
+}
 
 void Menu::goToMainWin()
 {

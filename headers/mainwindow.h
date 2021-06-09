@@ -8,6 +8,8 @@
 #include <QPushButton>
 #include <QGridLayout>
 
+/// This is class that implements all game buttons such as
+/// "Click me". It can signal that points were changed.
 class MainWindow : public QWidget
 {
 	Q_OBJECT

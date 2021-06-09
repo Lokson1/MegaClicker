@@ -9,6 +9,7 @@ int GamePoints::s_points = 0;
 int GamePoints::s_regPoints = 0;
 GamePoints* GamePoints::s_object = nullptr;
 
+/// The only way to create object of this class
 GamePoints* GamePoints::initPoints()
 {
 	if (s_object == nullptr)
@@ -16,13 +17,14 @@ GamePoints* GamePoints::initPoints()
 	return s_object;
 }
 
+/// It is safe way to delete GamePoints and save data
 void GamePoints::tryToRm()
 {
 	if (s_object != nullptr)
 		delete s_object;
 }
 
-// initializating preveous points
+/// Initializating preveous points
 GamePoints::GamePoints()
 {
 	QFile data("score");
@@ -58,9 +60,11 @@ GamePoints::~GamePoints()
 int GamePoints::getPoints() { return s_points; }
 int GamePoints::getRegPoints() { return s_regPoints; }
 
+/// Increase s_points on amount
 void GamePoints::operator+= (int amount) { s_points += amount; emit pointsIncr(); }
-
+/// Decrease s_points on amount
 void GamePoints::operator-= (int amount) { s_points -= amount; emit pointsIncr(); }
+/// Increase s_regPoints on amount
 void GamePoints::incrRegPoints(int amount) { s_regPoints += amount; }
 
 void GamePoints::regularIncr() { s_points += s_regPoints; emit pointsIncr(); }

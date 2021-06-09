@@ -6,9 +6,10 @@
 #include <QPushButton>
 #include <QString>
 
-///////////////////////////////////////////////////////////////////////////////
-/// \brief The GameButton class
-///
+/*!
+ * \class GameButton
+ * \brief The fundamental class class that provides interfase for other buttons
+*/
 class GameButton : public QPushButton
 {
 	Q_OBJECT
@@ -18,15 +19,16 @@ public:
 	~GameButton();
 
 protected:
-	GamePoints* s_points;		// Points at game score
+	GamePoints* s_points;
 
 signals:
 	void changedPoints(int value);
 };
 
-///////////////////////////////////////////////////////////////////////////////
-/// \brief The MainClicker class detects user click and increase points.
-///
+/*!
+ * \class MainClicker
+ * \brief The MainClicker class detects user click and increase s_points.
+*/
 class MainClicker : public GameButton
 {
 	Q_OBJECT
@@ -38,9 +40,11 @@ public slots:
 	void incrPoints();
 };
 
-///////////////////////////////////////////////////////////////////////////////
-/// \brief The RepeatingIncrease class automatically increase points
-///
+/*!
+ * \class RepeatingIncrease
+ * \brief Detects user click, checks price before purchase and increase
+ * 		  s_regPoints
+*/
 class RepeatingIncrease: public GameButton
 {
 	Q_OBJECT
