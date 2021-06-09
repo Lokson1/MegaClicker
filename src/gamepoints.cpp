@@ -1,4 +1,5 @@
 #include <QFile>
+#include <QDir>
 #include <QTextStream>
 #include <QTimer>
 #include <QDebug>
@@ -7,9 +8,9 @@
 
 int GamePoints::s_points = 0;
 int GamePoints::s_regPoints = 0;
+QString GamePoints::s_path = "";
 GamePoints* GamePoints::s_object = nullptr;
 
-/// The only way to create object of this class
 GamePoints* GamePoints::initPoints()
 {
 	if (s_object == nullptr)
@@ -17,7 +18,6 @@ GamePoints* GamePoints::initPoints()
 	return s_object;
 }
 
-/// It is safe way to delete GamePoints and save data
 void GamePoints::tryToRm()
 {
 	if (s_object != nullptr)
@@ -27,8 +27,10 @@ void GamePoints::tryToRm()
 /// Initializating preveous points
 GamePoints::GamePoints()
 {
-	QFile data("score");
+	QFile data(QString("%1/score").arg(s_path));
+
 	data.open(QIODevice::ReadOnly | QIODevice::ExistingOnly);
+
 	QTextStream file(&data);
 
 	file >> s_points;
@@ -42,11 +44,11 @@ GamePoints::GamePoints()
 
 GamePoints::~GamePoints()
 {
-	QFile data("score");
-	data.open(QIODevice::WriteOnly);
-	QTextStream file(&data);
+	QFile data(QString("%1/score").arg(s_path));
 
-	// TODO make regPoints save
+	data.open(QIODevice::WriteOnly);
+
+	QTextStream file(&data);
 	if (data.isOpen()) {
 		file << s_points << Qt::endl;
 		file << s_regPoints;
@@ -60,11 +62,8 @@ GamePoints::~GamePoints()
 int GamePoints::getPoints() { return s_points; }
 int GamePoints::getRegPoints() { return s_regPoints; }
 
-/// Increase s_points on amount
 void GamePoints::operator+= (int amount) { s_points += amount; emit pointsIncr(); }
-/// Decrease s_points on amount
 void GamePoints::operator-= (int amount) { s_points -= amount; emit pointsIncr(); }
-/// Increase s_regPoints on amount
 void GamePoints::incrRegPoints(int amount) { s_regPoints += amount; }
 
 void GamePoints::regularIncr() { s_points += s_regPoints; emit pointsIncr(); }

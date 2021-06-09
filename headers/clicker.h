@@ -6,6 +6,7 @@
 
 #include <QWidget>
 #include <QShortcut>
+#include <QString>
 
 /*!
  * \class Clicker
@@ -16,7 +17,7 @@ class Clicker : public QWidget
 	Q_OBJECT
 
 public:
-	Clicker(QWidget *parent = nullptr);
+	Clicker(QString pathToBin, QWidget *parent = nullptr);
 
 private:
 	MainWindow* m_mainWindow;

@@ -16,9 +16,11 @@ class MainWindow : public QWidget
 
 public:
 	MainWindow(QWidget* parent = 0);
+	QGridLayout* getLayout();
 
 private:
 	QLCDNumber* m_lcdNumber;
+	QGridLayout* m_grid;
 	GamePoints* s_points;
 
 	void fileReading();
