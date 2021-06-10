@@ -1,6 +1,7 @@
 #include "menu.h"
 
 #include <QFont>
+#include <QApplication>
 
 Menu::Menu(QWidget *parent) : QWidget(parent)
 {
@@ -10,8 +11,9 @@ Menu::Menu(QWidget *parent) : QWidget(parent)
 	m_returnToGame = new QPushButton("Resume game", this);
 	// TODO make button to work
 	m_settings     = new QPushButton("Settings", this);
-	// TODO make "quit" button
+
 	QPushButton* quit = new QPushButton("Quit", this);
+	connect(quit, &QPushButton::clicked, QApplication::instance(), &QApplication::exit);
 
 	QGridLayout* grid = new QGridLayout(this);
 	grid->addWidget(m_label, 0, 0);

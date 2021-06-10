@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget* parent)
 	MainClicker* mainClicker = new MainClicker("Click me", this);
 	RepeatingIncrease*	autoPlusOne = new RepeatingIncrease(1, 600, this);
 	RepeatingIncrease*  autoPlusTwo = new RepeatingIncrease(2, 1000, this);
+	IncreaseCLickPoints* clickIncr  = new IncreaseCLickPoints(this);
 
 	m_grid 		= new QGridLayout(this);
 	m_lcdNumber = new QLCDNumber(this);
@@ -27,6 +28,7 @@ MainWindow::MainWindow(QWidget* parent)
 	m_grid->addWidget(mainClicker, 1, 0);
 	m_grid->addWidget(autoPlusOne, 2, 0);
 	m_grid->addWidget(autoPlusTwo, 3, 0);
+	m_grid->addWidget(clickIncr, 4, 0);
 
 	setLayout(m_grid);
 
@@ -34,8 +36,11 @@ MainWindow::MainWindow(QWidget* parent)
 
 	connect(autoPlusOne, &MainClicker::changedPoints, this, &MainWindow::showPoints);
 	connect(this, &MainWindow::pointsSet, autoPlusOne, &RepeatingIncrease::isClickable);
+
 	connect(autoPlusTwo, &MainClicker::changedPoints, this, &MainWindow::showPoints);
 	connect(this, &MainWindow::pointsSet, autoPlusTwo, &RepeatingIncrease::isClickable);
-}
 
-QGridLayout* MainWindow::getLayout() { return m_grid; }
+	connect(clickIncr, &IncreaseCLickPoints::clicked, this, &MainWindow::showPoints);
+	connect(clickIncr, &IncreaseCLickPoints::changeClickMeButton, mainClicker, &MainClicker::incrIncr);
+	connect(this, &MainWindow::pointsSet, clickIncr, &IncreaseCLickPoints::isClickable);
+}

@@ -8,6 +8,7 @@
 
 int GamePoints::s_points = 0;
 int GamePoints::s_regPoints = 0;
+int GamePoints::s_clickIncr = 0;
 QString GamePoints::s_path = "";
 GamePoints* GamePoints::s_object = nullptr;
 
@@ -35,6 +36,7 @@ GamePoints::GamePoints()
 
 	file >> s_points;
 	file >> s_regPoints;
+	file >> s_clickIncr;
 	data.close();
 
 	QTimer* timer = new QTimer(this);
@@ -51,7 +53,8 @@ GamePoints::~GamePoints()
 	QTextStream file(&data);
 	if (data.isOpen()) {
 		file << s_points << Qt::endl;
-		file << s_regPoints;
+		file << s_regPoints << Qt::endl;
+		file << s_clickIncr;
 	}
 	data.close();
 
@@ -61,9 +64,11 @@ GamePoints::~GamePoints()
 
 int GamePoints::getPoints() { return s_points; }
 int GamePoints::getRegPoints() { return s_regPoints; }
+int GamePoints::getClickIncr() { return s_clickIncr; }
 
 void GamePoints::operator+= (int amount) { s_points += amount; emit pointsIncr(); }
 void GamePoints::operator-= (int amount) { s_points -= amount; emit pointsIncr(); }
 void GamePoints::incrRegPoints(int amount) { s_regPoints += amount; }
+void GamePoints::incrClickIncr() { s_clickIncr+= s_clickIncr; }
 
 void GamePoints::regularIncr() { s_points += s_regPoints; emit pointsIncr(); }

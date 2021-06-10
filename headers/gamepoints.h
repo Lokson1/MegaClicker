@@ -20,6 +20,7 @@ public:
 
 	static int getPoints();
 	static int getRegPoints();
+	static int getClickIncr();
 
 	/// Set path for saving data. Gets fullPath to binary file
 	static void setCurrentDir(QString fullPath) { s_path = fullPath; }
@@ -30,6 +31,8 @@ public:
 	void operator-= (int amount);
 	/// Increase s_regPoints on amount
 	void incrRegPoints(int amount);
+	/// Initialize s_clickIncr with amount
+	void incrClickIncr();
 
 private:
 	GamePoints();
@@ -38,6 +41,7 @@ private:
 	static GamePoints* s_object;
 	static int s_points;		// Game Points
 	static int s_regPoints;		// Regular increasing of m_points
+	static int s_clickIncr;		// Increasing points by on click
 
 private slots:
 	void regularIncr();

@@ -18,6 +18,8 @@ public:
 	GameButton(QString printOnButton, QWidget* parent = 0);
 	~GameButton();
 
+	void changePrint(QString newPrint);
+
 protected:
 	GamePoints* s_points;
 
@@ -38,6 +40,10 @@ public:
 
 public slots:
 	void incrPoints();
+	void incrIncr(int newValue);
+
+private:
+	int m_increase;
 };
 
 /*!
@@ -63,5 +69,26 @@ private:
 	int m_cost;
 	int m_increase;
 };
+
+class IncreaseCLickPoints : public GameButton
+{
+	Q_OBJECT
+
+public:
+	IncreaseCLickPoints(QWidget* parent);
+
+private slots:
+	void byingClickIncr();
+
+public slots:
+	void isClickable();
+
+private:
+	int m_cost;
+
+signals:
+	void changeClickMeButton(int value);
+};
+
 
 #endif // GAMEBUTTON_H
