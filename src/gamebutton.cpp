@@ -64,7 +64,12 @@ void RepeatingIncrease::isClickable()
 
 /* implementation IncreaseCLickPoints */
 
-int getPriceForClickIncr(int clickIncr) { return clickIncr * 100 - 100 / clickIncr;}
+int getPriceForClickIncr(int clickIncr)
+{
+	if (clickIncr != 1)
+		return clickIncr * 100 - 100 / clickIncr;
+	return 100;
+}
 
 IncreaseCLickPoints::IncreaseCLickPoints(QWidget* parent)
 	: GameButton(QString("Increase click me button on %1\nCost: %2")

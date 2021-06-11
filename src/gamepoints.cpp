@@ -8,7 +8,7 @@
 
 int GamePoints::s_points = 0;
 int GamePoints::s_regPoints = 0;
-int GamePoints::s_clickIncr = 0;
+int GamePoints::s_clickIncr = 1;
 QString GamePoints::s_path = "";
 GamePoints* GamePoints::s_object = nullptr;
 
@@ -30,13 +30,22 @@ GamePoints::GamePoints()
 {
 	QFile data(QString("%1/score").arg(s_path));
 
-	data.open(QIODevice::ReadOnly | QIODevice::ExistingOnly);
+	qDebug() << "Writing new file";
+	if (data.exists()) {
+		data.open(QIODevice::ReadOnly | QIODevice::ExistingOnly);
+		QTextStream file(&data);
+		file >> s_points;
+		file >> s_regPoints;
+		file >> s_clickIncr;
+	}
+	else {
+		data.open(QIODevice::WriteOnly | QIODevice::NewOnly);
+		QTextStream file(&data);
+		file << 0 << Qt::endl;
+		file << 0 << Qt::endl;
+		file << 0 << Qt::endl;
+	}
 
-	QTextStream file(&data);
-
-	file >> s_points;
-	file >> s_regPoints;
-	file >> s_clickIncr;
 	data.close();
 
 	QTimer* timer = new QTimer(this);
