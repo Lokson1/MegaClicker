@@ -11,6 +11,7 @@ CONFIG += c++11
 INCLUDEPATH += headers/
 
 SOURCES += \
+    src/settings.cpp \
     src/main.cpp \
 	src/gamepoints.cpp \
 	src/clicker.cpp \
@@ -23,7 +24,8 @@ HEADERS += \
 	headers/clicker.h \
 	headers/gamebutton.h \
 	headers/mainwindow.h \
-	headers/menu.h
+	headers/menu.h \
+    headers/settings.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -31,4 +33,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    README.md \
     score

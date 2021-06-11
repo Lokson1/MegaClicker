@@ -22,9 +22,6 @@ public:
 	static int getRegPoints();
 	static int getClickIncr();
 
-	/// Set path for saving data. Gets fullPath to binary file
-	static void setCurrentDir(QString fullPath) { s_path = fullPath; }
-
 	/// Increase s_points on amount
 	void operator+= (int amount);
 	/// Decrease s_points on amount

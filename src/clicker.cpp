@@ -5,10 +5,8 @@
 #include <QFile>
 #include <QGridLayout>
 
-Clicker::Clicker(QString pathToBin, QWidget *parent) : QWidget(parent)
+Clicker::Clicker(QWidget *parent) : QWidget(parent)
 {
-	GamePoints::setCurrentDir(pathToBin);
-
 	m_mainWindow = new MainWindow(this);
 	m_mainWindow->hide();
 

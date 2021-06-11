@@ -1,6 +1,8 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include "settings.h"
+
 #include <QWidget>
 #include <QLabel>
 #include <QGridLayout>
@@ -16,12 +18,19 @@ public:
 
 private:
 	QLabel* m_label;
+
 	QPushButton* m_returnToGame;
-	QPushButton* m_settings;
 	QWidget* m_mainWindow;
+
+	QPushButton* m_goToSettings;
+	Settings* m_settings;
+
+	QPushButton* m_statistics;
+
 
 private slots:
 	void goToMainWin();
+	void goToSettingsWin();
 };
 
 #endif // MENU_H

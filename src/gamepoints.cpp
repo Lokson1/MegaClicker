@@ -2,7 +2,7 @@
 #include <QDir>
 #include <QTextStream>
 #include <QTimer>
-#include <QDebug>
+#include <QApplication>
 
 #include "gamepoints.h"
 
@@ -28,9 +28,8 @@ void GamePoints::tryToRm()
 /// Initializating preveous points
 GamePoints::GamePoints()
 {
-	QFile data(QString("%1/score").arg(s_path));
+	QFile data(QString("%1/score").arg(QApplication::applicationDirPath()));
 
-	qDebug() << "Writing new file";
 	if (data.exists()) {
 		data.open(QIODevice::ReadOnly | QIODevice::ExistingOnly);
 		QTextStream file(&data);
