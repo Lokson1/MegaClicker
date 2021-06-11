@@ -16,6 +16,7 @@ void GameButton::changePrint(QString newPrint) { this->setText(newPrint); }
 MainClicker::MainClicker(QString printOnButton, QWidget* parent)
 	: GameButton(printOnButton, parent), m_increase(1)
 {
+	m_increase = GamePoints::getClickIncr();
 	connect(this, &QPushButton::clicked, this, &MainClicker::incrPoints);
 }
 
@@ -67,12 +68,12 @@ int getPriceForClickIncr(int clickIncr) { return clickIncr * 100 - 100 / clickIn
 
 IncreaseCLickPoints::IncreaseCLickPoints(QWidget* parent)
 	: GameButton(QString("Increase click me button on %1\nCost: %2")
-				 .arg(s_points->getClickIncr()).arg(getPriceForClickIncr(s_points->getClickIncr())), parent)
+				 .arg(GamePoints::getClickIncr()).arg(getPriceForClickIncr(GamePoints::getClickIncr())), parent)
 {
 	this->setEnabled(false);
 
 	connect(this, &QPushButton::clicked, this, &IncreaseCLickPoints::byingClickIncr);
-	m_cost = 100;
+	m_cost = getPriceForClickIncr(GamePoints::getClickIncr());
 }
 
 void IncreaseCLickPoints::byingClickIncr()
