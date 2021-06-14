@@ -3,6 +3,7 @@
 
 #include "mainwindow.h"
 #include "menu.h"
+#include "settings.h"
 
 #include <QWidget>
 #include <QShortcut>
@@ -21,6 +22,7 @@ public:
 private:
 	MainWindow* m_mainWindow;
 	Menu* m_menu;
+	Settings* m_settings;
 	QShortcut* m_esc;
 
 private slots:

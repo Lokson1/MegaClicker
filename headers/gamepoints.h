@@ -14,7 +14,7 @@ class GamePoints : public QObject
 	Q_OBJECT
 public:
 	/// The only way to create object of this class
-	static GamePoints* initPoints();
+	static GamePoints* instance();
 	/// It is safe way to delete GamePoints and save data
 	static void tryToRm();
 
@@ -30,11 +30,13 @@ public:
 	void incrRegPoints(int amount);
 	/// Initialize s_clickIncr with amount
 	void incrClickIncr();
+	/// clearing all data
+	void clearData();
 
 private:
 	GamePoints();
 	~GamePoints();
-	static QString s_path;
+
 	static GamePoints* s_object;
 	static int s_points;		// Game Points
 	static int s_regPoints;		// Regular increasing of m_points

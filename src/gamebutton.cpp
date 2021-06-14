@@ -3,7 +3,7 @@
 #include <QTimer>
 
 GameButton::GameButton(QString printOnButton, QWidget* parent)
-	: QPushButton(printOnButton, parent), s_points(GamePoints::initPoints())
+	: QPushButton(printOnButton, parent), s_points(GamePoints::instance())
 {
 }
 
@@ -24,6 +24,7 @@ void MainClicker::incrIncr(int newValue) { m_increase = newValue; }
 
 void MainClicker::incrPoints()
 {
+	m_increase = GamePoints::getClickIncr();
 	// Pointer is necessary
 	*s_points += m_increase;
 	emit changedPoints(m_increase);
@@ -66,7 +67,7 @@ void RepeatingIncrease::isClickable()
 
 int getPriceForClickIncr(int clickIncr)
 {
-	if (clickIncr != 1)
+	if (clickIncr != 1 && clickIncr != 0)
 		return clickIncr * 100 - 100 / clickIncr;
 	return 100;
 }

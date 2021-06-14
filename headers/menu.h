@@ -1,8 +1,6 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "settings.h"
-
 #include <QWidget>
 #include <QLabel>
 #include <QGridLayout>
@@ -14,7 +12,8 @@ class Menu : public QWidget
 public:
 	Menu(QWidget *parent);
 
-	void setMainWindow(QWidget* win);
+	void setMainWin(QWidget* win);
+	void setSettingsWin(QWidget* win);
 
 private:
 	QLabel* m_label;
@@ -23,7 +22,7 @@ private:
 	QWidget* m_mainWindow;
 
 	QPushButton* m_goToSettings;
-	Settings* m_settings;
+	QWidget* m_settings;
 
 	QPushButton* m_statistics;
 

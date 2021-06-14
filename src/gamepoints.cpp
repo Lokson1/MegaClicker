@@ -9,10 +9,9 @@
 int GamePoints::s_points = 0;
 int GamePoints::s_regPoints = 0;
 int GamePoints::s_clickIncr = 1;
-QString GamePoints::s_path = "";
 GamePoints* GamePoints::s_object = nullptr;
 
-GamePoints* GamePoints::initPoints()
+GamePoints* GamePoints::instance()
 {
 	if (s_object == nullptr)
 		s_object = new GamePoints();
@@ -54,7 +53,7 @@ GamePoints::GamePoints()
 
 GamePoints::~GamePoints()
 {
-	QFile data(QString("%1/score").arg(s_path));
+	QFile data(QString("%1/score").arg(QApplication::applicationDirPath()));
 
 	data.open(QIODevice::WriteOnly);
 
@@ -80,3 +79,10 @@ void GamePoints::incrRegPoints(int amount) { s_regPoints += amount; }
 void GamePoints::incrClickIncr() { s_clickIncr+= s_clickIncr; }
 
 void GamePoints::regularIncr() { s_points += s_regPoints; emit pointsIncr(); }
+
+void GamePoints::clearData()
+{
+	s_points = 0;
+	s_regPoints = 0;
+	s_clickIncr = 1;
+}

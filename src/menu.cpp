@@ -10,9 +10,7 @@ Menu::Menu(QWidget *parent) : QWidget(parent)
 
 	m_returnToGame = new QPushButton("Resume game", this);
 
-	// TODO make button to work
 	m_goToSettings = new QPushButton("Settings", this);
-	m_settings = new Settings(this);
 	connect(m_goToSettings, &QPushButton::clicked, this, &Menu::goToSettingsWin);
 
 	// TODO make statistics module
@@ -32,10 +30,16 @@ Menu::Menu(QWidget *parent) : QWidget(parent)
 }
 
 /// Connects "resume game" button with mainWindow
-void Menu::setMainWindow(QWidget *win)
+void Menu::setMainWin(QWidget *win)
 {
 	m_mainWindow = win;
 	connect(m_returnToGame, &QPushButton::clicked, this, &Menu::goToMainWin);
+}
+
+void Menu::setSettingsWin(QWidget *win)
+{
+	m_settings = win;
+	connect(m_goToSettings, &QPushButton::clicked, this, &Menu::goToSettingsWin);
 }
 
 void Menu::goToMainWin()

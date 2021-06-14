@@ -2,6 +2,7 @@
 #define SETTINGS_H
 
 #include <QWidget>
+#include <QMessageBox>
 
 class Settings : public QWidget
 {
@@ -9,6 +10,16 @@ class Settings : public QWidget
 
 public:
 	Settings(QWidget* parent);
+
+	void setMenu(QWidget* win);
+
+private:
+	QMessageBox* m_checkForReset;
+	QWidget* m_menu;
+
+private slots:
+	void goToMenu();
+	void makeMessage();
 };
 
 #endif // SETTINGS_H

@@ -12,7 +12,7 @@ void MainWindow::showPoints()
 }
 
 MainWindow::MainWindow(QWidget* parent)
-	: QWidget(parent), s_points(GamePoints::initPoints())
+	: QWidget(parent), s_points(GamePoints::instance())
 {
 	// Configurating buttons
 	MainClicker* mainClicker = new MainClicker("Click me", this);
