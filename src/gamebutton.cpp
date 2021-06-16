@@ -30,13 +30,28 @@ void MainClicker::incrPoints()
 	emit changedPoints(m_increase);
 }
 
+/* PurchaseButton implementation */
+
+PurchaseButton::PurchaseButton(QString print, QWidget* parent)
+	: GameButton(print, parent)
+{
+}
+
+void PurchaseButton::isClickable()
+{
+	if (s_points->getPoints() >= m_cost)
+		this->setEnabled(true);
+	else
+		this->setEnabled(false);
+}
+
 /* RepeatingIncrease implementation */
 
 RepeatingIncrease::RepeatingIncrease(int increase, int cost, QWidget* parent)
-	: GameButton(QString("Auto: +%1 per sec.\nCost: %2").arg(increase).arg(cost), parent),
-	  m_cost(cost), m_increase(increase)
+	: PurchaseButton(QString("Auto: +%1 per sec.\nCost: %2").arg(increase).arg(cost), parent)
 {
 	this->setEnabled(false);
+	m_cost = cost;
 
 	connect(this, &QPushButton::clicked, this, &RepeatingIncrease::byingAutoIncr);
 	connect(s_points, &GamePoints::pointsIncr, this, &RepeatingIncrease::autoPointsIncr);
@@ -53,16 +68,6 @@ void RepeatingIncrease::byingAutoIncr()
 
 void RepeatingIncrease::autoPointsIncr() { emit changedPoints(s_points->getPoints()); }
 
-// TODO make this function virtual
-/// This slot makes button clickable when s_score is enough
-void RepeatingIncrease::isClickable()
-{
-	if (s_points->getPoints() >= m_cost)
-		this->setEnabled(true);
-	else
-		this->setEnabled(false);
-}
-
 /* implementation IncreaseCLickPoints */
 
 int getPriceForClickIncr(int clickIncr)
@@ -73,7 +78,7 @@ int getPriceForClickIncr(int clickIncr)
 }
 
 IncreaseCLickPoints::IncreaseCLickPoints(QWidget* parent)
-	: GameButton(QString("Increase click me button on %1\nCost: %2")
+	: PurchaseButton(QString("Increase click me button on %1\nCost: %2")
 				 .arg(GamePoints::getClickIncr()).arg(getPriceForClickIncr(GamePoints::getClickIncr())), parent)
 {
 	this->setEnabled(false);
@@ -95,12 +100,4 @@ void IncreaseCLickPoints::byingClickIncr()
 		emit changeClickMeButton(increase);
 		emit changedPoints(s_points->getPoints());
 	}
-}
-
-void IncreaseCLickPoints::isClickable()
-{
-	if (s_points->getPoints() >= m_cost)
-		this->setEnabled(true);
-	else
-		this->setEnabled(false);
 }

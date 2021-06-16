@@ -47,11 +47,29 @@ private:
 };
 
 /*!
+ * \class PurchaseButton
+ * \brief Abstract class that manages isClickable button and it's price
+*/
+class PurchaseButton : public GameButton
+{
+	Q_OBJECT
+
+public:
+	PurchaseButton(QString printOnButton, QWidget* parent);
+
+public slots:
+	void isClickable();
+
+protected:
+	long m_cost;
+};
+
+/*!
  * \class RepeatingIncrease
  * \brief Detects user click, checks price before purchase and increase
  * 		  s_regPoints
 */
-class RepeatingIncrease: public GameButton
+class RepeatingIncrease: public PurchaseButton
 {
 	Q_OBJECT
 
@@ -62,15 +80,11 @@ private slots:
 	void byingAutoIncr();
 	void autoPointsIncr();
 
-public slots:
-	void isClickable();
-
 private:
-	int m_cost;
 	int m_increase;
 };
 
-class IncreaseCLickPoints : public GameButton
+class IncreaseCLickPoints : public PurchaseButton
 {
 	Q_OBJECT
 
@@ -79,12 +93,6 @@ public:
 
 private slots:
 	void byingClickIncr();
-
-public slots:
-	void isClickable();
-
-private:
-	int m_cost;
 
 signals:
 	void changeClickMeButton(int value);

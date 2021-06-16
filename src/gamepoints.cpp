@@ -85,4 +85,6 @@ void GamePoints::clearData()
 	s_points = 0;
 	s_regPoints = 0;
 	s_clickIncr = 1;
+	// TODO make sync with
+	// emit gamePoints()
 }
